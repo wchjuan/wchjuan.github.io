@@ -3,7 +3,28 @@
 
     <url>
         <loc>https://wchjuan.github.io/tags/%E9%9A%8F%E5%86%99/</loc>
-        <lastmod>2017-04-11T16:54:34.000Z</lastmod>
+        <lastmod>2017-04-12T02:49:34.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://wchjuan.github.io/tags/css/</loc>
+        <lastmod>2017-04-12T02:52:47.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://wchjuan.github.io/tags/%E5%89%8D%E7%AB%AF/</loc>
+        <lastmod>2017-04-12T02:54:40.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://wchjuan.github.io/tags/JavaScript/</loc>
+        <lastmod>2017-04-12T02:54:40.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>

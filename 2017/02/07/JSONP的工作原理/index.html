@@ -14,11 +14,11 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <title>
         
-          阳光的暖暖的 | 前端小白
+          jsonp工作原理 - 阳光的暖暖的 | 前端小白
         
     </title>
 
-    <link rel="canonical" href="https://wchjuan.github.io/archives/2016/11/">
+    <link rel="canonical" href="https://wchjuan.github.io/2017/02/07/JSONP的工作原理/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -69,8 +69,8 @@
 <style type="text/css">
     header.intro-header{
         
-            background-image: url('/undefined')
-            /*page*/
+            background-image: url('archive-bg.png')
+            /*post*/
         
     }
     
@@ -87,10 +87,20 @@
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                 
-                    <div class="site-heading">
-                        <h1>阳光的暖暖的</h1>
-                        <!--<hr class="small">-->
-                        <span class="subheading"></span>
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/tags/#前端" title="前端">前端</a>
+                            
+                              <a class="tag" href="/tags/#JavaScript" title="JavaScript">JavaScript</a>
+                            
+                        </div>
+                        <h1>jsonp工作原理</h1>
+                        <h2 class="subheading"></h2>
+                        <span class="meta">
+                            Posted by 汪婵娟 on
+                            2017-02-07
+                        </span>
                     </div>
                 
 
@@ -193,284 +203,182 @@
 
 
     <!-- Main Content -->
-    <!-- Main Content -->
-<div class="container">
-    <div class="row">
-        
+    <!-- Modify by Yu-Hsuan Yen -->
 
-<!-- USE SIDEBAR -->
-    <!-- Post Container -->
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
             <div class="
-                col-lg-8 col-lg-offset-1
-                col-md-8 col-md-offset-1
-                col-sm-12
-                col-xs-12
-                post-container
-            ">
-            
-                
-<!-- Main Content -->
-<div class="container">
-    <div class="row">
-        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-            <!-- 归档列表 -->
-            
-            
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
 
-             <!-- 归档列表 -->
+                <p>我们知道，jsonp可以实现跨域请求，但究竟为什么要跨域，它的工作原理是怎样的，今天我来简单的介绍一下。</p>
+<p>首先我们需要了解同源策略，</p>
+<blockquote>
+<p>同源策略，它是由Netscape提出的一个著名的安全策略。现在所有支持JavaScript 的浏览器都会使用这个策略。所谓同源是指，域名，协议，端口相同。当一个浏览器的两个tab页中分别打开来 百度和谷歌的页面当一个百度浏览器执行一个脚本的时候会检查这个脚本是属于哪个页面的，即检查是否同源，只有和百度同源的脚本才会被执行。</p>
+</blockquote>
+<p>页面同源必须满足三个条件：</p>
+<p>1.相同的协议</p>
+<p>2.相同的端口</p>
+<p>3.相同的主机</p>
+<p>三者缺一不可。</p>
+<p><img src="https://cl.ly/312t3T0G1C46" alt="是否同源"></p>
+<p>同源策略是为了限制从两个不同源加载的文档或脚本资源进行交互，确保客户端脚本的安全性。</p>
+<p>同源策略控制了不同源之间的交互，例如在使用XMLHttpRequest 或 <img> 标签时则会受到同源策略的约束。我们知道，通常有三类交互：允许跨域读、写操作和跨资源嵌入。那为了能跨域访问，发现可以通过跨域资源共享（<a href="https://www.w3.org/TR/cors/" target="_blank" rel="external">CORS</a>）机制实现。<br>
+JS跨域<br>
+利用了script src没有同源限制，进行跨域请求。例如，<a href="http://www.a.com" target="_blank" rel="external">www.a.com</a> 想请求 <a href="http://www.b.com" target="_blank" rel="external">www.b.com</a> 的内容。</p>
+<pre><code>//网页a中的部分代码
+1 &lt;script type=&quot;text/javascript&quot;&gt;
+2 //回调函数
+3 function callback(data) {
+4     alert(data.message);
+5 }
+6 &lt;/script&gt;
+7 &lt;script type=&quot;text/javascript&quot; src=&quot;http://localhost:20002/test.js&quot;&gt;&lt;/script&gt;
 
-            
-            <div class="one-tag-list">
-                <span class="fa fa-calendar-times-o listing-seperator" id="2017">
-                    <span class="tag-text">2017</span>
-                </span>
-                <ul>
+
+
+//网页b中的代码
+1 //调用callback函数，并以json数据形式作为阐述传递，完成回调
+2 callback({message:&quot;success&quot;});
+</code></pre>
+<p>当然还有img,video,iframe,audio,@font-face等有src属性的标签可以进行跨域调用。<br>
+使用js手动添加<script> 标签，请求服务器端动态生成的一段可执行的js代码，可执行代码包含两部分，由客户端指定的函数名以及客户端所请求的数据。这样，只要客户端实现相对应的函数，就能对请求的数据进行相应的处理，从而实现跨域请求数据。</p>
+</script></p>
                 
-                  <!-- <li class="listing-item">
-                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
-                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
-                  </li> -->
-                 <li >
-                    03-27
-                    <i class="fa fa-angle-double-right" aria-hidden="true"></i>
-                    <a href="/2017/03/27/原型链/" style="color: #0085a1">
-                        <span>
-                            原型链
-                        </span>
-                    </a>
-                    <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
-                </li>
-                
-                  <!-- <li class="listing-item">
-                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
-                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
-                  </li> -->
-                 <li >
-                    03-27
-                    <i class="fa fa-angle-double-right" aria-hidden="true"></i>
-                    <a href="/2017/03/27/CSS盒模型问题/" style="color: #0085a1">
-                        <span>
-                            盒模型的理解
-                        </span>
-                    </a>
-                    <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
-                </li>
-                
-                  <!-- <li class="listing-item">
-                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
-                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
-                  </li> -->
-                 <li >
-                    02-10
-                    <i class="fa fa-angle-double-right" aria-hidden="true"></i>
-                    <a href="/2017/02/10/CSS定位与浮动/" style="color: #0085a1">
-                        <span>
-                            CSS定位
-                        </span>
-                    </a>
-                    <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
-                </li>
-                
-                  <!-- <li class="listing-item">
-                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
-                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
-                  </li> -->
-                 <li >
-                    02-07
-                    <i class="fa fa-angle-double-right" aria-hidden="true"></i>
-                    <a href="/2017/02/07/JSONP的工作原理/" style="color: #0085a1">
-                        <span>
-                            jsonp工作原理
-                        </span>
-                    </a>
-                    <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
-                </li>
-                
+
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/2016/12/01/大学生你需要知道的互联网学习网站分享/" data-toggle="tooltip" data-placement="top" title="大学生你需要知道的互联网学习网站分享">&larr; Previous Post</a>
+                        </li>
+                    
+                    
+                        <li class="next">
+                            <a href="/2017/02/10/CSS定位与浮动/" data-toggle="tooltip" data-placement="top" title="CSS定位">Next Post &rarr;</a>
+                        </li>
+                    
                 </ul>
+
+                <!-- duoshuo Share start -->
+                
+                <!-- 多说 Share end-->
+
+                <!-- 多说评论框 start -->
+                
+                <!-- 多说评论框 end -->
+
+                <!-- disqus comment start -->
+                
+                    <div class="comment">
+                        <div id="disqus_thread" class="disqus-thread"></div>
+                    </div>
+                
+                <!-- disqus comment end -->
             </div>
             
-            <div class="one-tag-list">
-                <span class="fa fa-calendar-times-o listing-seperator" id="2016">
-                    <span class="tag-text">2016</span>
-                </span>
-                <ul>
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
                 
-                  <!-- <li class="listing-item">
-                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
-                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
-                  </li> -->
-                 <li >
-                    12-01
-                    <i class="fa fa-angle-double-right" aria-hidden="true"></i>
-                    <a href="/2016/12/01/大学生你需要知道的互联网学习网站分享/" style="color: #0085a1">
-                        <span>
-                            大学生你需要知道的互联网学习网站分享
-                        </span>
-                    </a>
-                    <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
-                </li>
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
                 
-                  <!-- <li class="listing-item">
-                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
-                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
-                  </li> -->
-                 <li >
-                    11-23
-                    <i class="fa fa-angle-double-right" aria-hidden="true"></i>
-                    <a href="/2016/11/23/我与互联网的成长史/" style="color: #0085a1">
-                        <span>
-                            我与互联网的成长史
-                        </span>
-                    </a>
-                    <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
-                </li>
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#前端" title="前端">前端</a>
+                        
+                          <a class="tag" href="/tags/#JavaScript" title="JavaScript">JavaScript</a>
+                        
+                    </div>
+                </section>
                 
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                        <li><a href="https://blog.vvliebe.com" target="_blank">vvliebe</a></li>
+                    
                 </ul>
+                
             </div>
-            
-
-
         </div>
     </div>
-</div>
-
-                <!-- 如果开启评论功能 -->
-                
-            </div>
-
-          <!-- Sidebar Container -->
-<div class="
-    col-lg-3 col-lg-offset-0
-    col-md-3 col-md-offset-0
-    col-sm-12
-    col-xs-12
-    sidebar-container
-">
-    
-        <!-- Featured Tags -->
-
-<section>
-    <!-- no hr -->
-    <h5><a href="/tags/">FEATURED TAGS</a></h5>
-    <div class="tags">
-        
-            
-        
-            
-            <a href="/tags/#前端" title="前端" rel="4">前端</a>
-            
-        
-            
-            <a href="/tags/#JavaScript" title="JavaScript" rel="3">JavaScript</a>
-            
-        
-            
-            <a href="/tags/#随写" title="随写" rel="2">随写</a>
-            
-        
-    </div>
-</section>
-
-        <hr>
-    
-        <!-- Short About -->
-<section class="visible-md visible-lg">
-    <h5><a href="/about/">ABOUT ME</a></h5>
-    <div class="short-about">
-
-        
-            <img id = "avatar_pic" src="/img/ironman-draw.png" />
-        
-
-        
-            <p>Hi, i&#39;m wchjuan</p>
-        
-
-        <!-- SNS Link -->
-        <ul class="list-inline">
-            
-            
-            
-
-            
-
-            
-                <li>
-                    <a target="_blank" href="https://www.facebook.com/profile.php?id=100013650421534">
-                        <span class="fa-stack fa-lg">
-                            <i class="fa fa-circle fa-stack-2x"></i>
-                            <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
-                        </span>
-                    </a>
-                </li>
-            
-
-            
-                <li>
-                    <a target="_blank"  href="https://github.com/wchjuan">
-                        <span class="fa-stack fa-lg">
-                            <i class="fa fa-circle fa-stack-2x"></i>
-                            <i class="fa fa-github fa-stack-1x fa-inverse"></i>
-                        </span>
-                    </a>
-                </li>
-            
+</article>
 
 
-            
-        </ul>
-    </div>
-</section>
 
-        <hr>
-    
-        
-  <h5>RECENT POSTS</h3>
-  <div class="widget">
-    <ul>
-      
-        <li>
-          <a href="/2017/03/27/CSS盒模型问题/">盒模型的理解</a>
-        </li>
-      
-        <li>
-          <a href="/2017/03/27/原型链/">原型链</a>
-        </li>
-      
-        <li>
-          <a href="/2017/02/10/CSS定位与浮动/">CSS定位</a>
-        </li>
-      
-        <li>
-          <a href="/2017/02/07/JSONP的工作原理/">jsonp工作原理</a>
-        </li>
-      
-        <li>
-          <a href="/2016/12/01/大学生你需要知道的互联网学习网站分享/">大学生你需要知道的互联网学习网站分享</a>
-        </li>
-      
-    </ul>
-  </div>
 
-        <hr>
-    
-        <!-- Friends Blog -->
+<!-- disqus embedded js code start (one page only need to embed once) -->
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = "your-disqus-ID";
+    var disqus_identifier = "https://wchjuan.github.io/2017/02/07/JSONP的工作原理/";
+    var disqus_url = "https://wchjuan.github.io/2017/02/07/JSONP的工作原理/";
 
-<h5>FRIENDS</h5>
-<ul class="list-inline">
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<!-- disqus embedded js code start end -->
 
-    
-        <li><a href="https://blog.vvliebe.com" target="_blank">vvliebe</a></li>
-    
-</ul>
 
-        <hr>
-    
-</div>
 
-        
-    </div>
-</div>
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: 'ℬ'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
 
 
     <!-- Footer -->
